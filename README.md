@@ -53,6 +53,20 @@ This project demonstrates a CI/CD pipeline for deploying a static website to AWS
   - `ECS_CLUSTER`
   - `ECS_SERVICE`
 
+## Network Configuration
+
+To access the website, port 80 must be explicitly allowed in the default security group. The default rule that allows all traffic was only permitting traffic from within the security group itself, not from external sources. Make sure to add an inbound rule for HTTP traffic (port 80) to allow public access to the website.
+
+## Future Project Exploration
+
+- Implement HTTPS using AWS Certificate Manager and Application Load Balancer
+- Add a CI/CD pipeline for automated testing before deployment
+- Implement infrastructure as code using AWS CDK or Terraform
+- Set up monitoring and alerting with CloudWatch
+- Implement a custom domain name with Route 53
+- Add content management capabilities
+- Implement blue/green deployment strategy
+
 ## License
 
 See the [LICENSE](LICENSE) file for details.
