@@ -251,4 +251,4 @@ This project is licensed under the terms of the [LICENSE](LICENSE) file included
 
 ---
 
-Created by [Your Name] - Feel free to contact me with any questions!
+Powered by Blakk Brother Inc
