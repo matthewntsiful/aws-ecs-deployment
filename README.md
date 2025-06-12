@@ -29,7 +29,23 @@ This project demonstrates a complete CI/CD pipeline for deploying a static websi
 
 ## Architecture
 
-![Architecture Diagram](https://via.placeholder.com/800x400?text=Architecture+Diagram)
+```
+┌─────────────┐     ┌───────────────┐     ┌─────────────────┐     ┌──────────────┐
+│             │     │               │     │                 │     │              │
+│  GitHub     │────▶│  GitHub       │────▶│  Amazon ECR     │────▶│  AWS ECS     │
+│  Repository │     │  Actions      │     │  (Container     │     │  Fargate     │
+│             │     │  Workflow     │     │   Registry)     │     │              │
+└─────────────┘     └───────────────┘     └─────────────────┘     └──────────────┘
+                                                                         │
+                                                                         │
+                                                                         ▼
+                                                                  ┌──────────────┐
+                                                                  │              │
+                                                                  │  Public      │
+                                                                  │  Internet    │
+                                                                  │              │
+                                                                  └──────────────┘
+```
 
 - **Frontend**: Simple static website built with HTML5 and CSS3
 - **Container**: NGINX Alpine serving static content with optimized configuration
