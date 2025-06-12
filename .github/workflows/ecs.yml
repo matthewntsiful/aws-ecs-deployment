@@ -5,7 +5,13 @@ on:
   push:
     branches:
       - main
-
+    paths-ignore:
+      - .github/workflows/ecs.yml
+      - README.md
+      - LICENSE
+      - .gitignore
+      - Dockerfile
+      - src/**
 
 jobs:
   deploy:
