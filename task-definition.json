@@ -1,0 +1,64 @@
+{
+   
+    "containerDefinitions": [
+        {
+            "name": "brand-site-app-container",
+            "image": "011921741878.dkr.ecr.eu-north-1.amazonaws.com/brand-site-app:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "brand-site-app-container-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/brand-site-app-task-definition",
+                    "mode": "non-blocking",
+                    "awslogs-create-group": "true",
+                    "max-buffer-size": "25m",
+                    "awslogs-region": "eu-north-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "brand-site-app-task-definition",
+    "taskRoleArn": "arn:aws:iam::011921741878:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::011921741878:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    
+    "volumes": [],
+   
+   
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2025-06-12T13:01:26.103Z",
+    
+    "enableFaultInjection": false,
+    "tags": []
+}
