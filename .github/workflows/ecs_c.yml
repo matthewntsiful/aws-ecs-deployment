@@ -7,8 +7,9 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'docs/**'
-      - 'readme.md'
+      - README.md
+      - LICENSE
+      - .gitignore
 
 jobs:
   deploy:
