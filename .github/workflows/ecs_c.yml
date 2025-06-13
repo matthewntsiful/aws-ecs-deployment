@@ -35,7 +35,7 @@ jobs:
 
      # integrate trivy action to scan the docker image for vulnerabilities
     - name: Scan Docker image for vulnerabilities with Trivy
-      uses: aquasecurity/trivy-action@v0.28.0
+      uses: aquasecurity/trivy-action@v0.31.0
       with:
         image: ${{ secrets.ECR_REPOSITORY_URI }}:latest
         format: table
@@ -68,3 +68,6 @@ jobs:
         service: ${{ secrets.ECS_SERVICE }}
         cluster: ${{ secrets.ECS_CLUSTER }}
         wait-for-service-stability: true
+
+
+        ##
