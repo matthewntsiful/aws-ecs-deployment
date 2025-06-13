@@ -105,9 +105,11 @@ This project demonstrates a complete CI/CD pipeline for deploying a static websi
 - Ensure your ECS service uses a VPC with public subnets
 - Configure security groups to allow inbound traffic on port 80
 
-## GitHub Actions Workflow
+## GitHub Actions Workflows
 
-The workflow in `.github/workflows/ecs.yml` performs the following steps:
+### Primary Workflow (ecs.yml)
+
+The primary workflow in `.github/workflows/ecs.yml` performs the following steps:
 
 1. **Checkout Code**: Retrieves the latest code from the repository
 2. **Set up AWS Credentials**: Configures AWS authentication using repository secrets
@@ -115,7 +117,38 @@ The workflow in `.github/workflows/ecs.yml` performs the following steps:
 4. **Build Docker Image**: Creates a container image from the Dockerfile
 5. **Tag Docker Image**: Labels the image with the appropriate ECR repository URI
 6. **Push to ECR**: Uploads the image to Amazon ECR
-7. **Update ECS Service**: Triggers a new deployment of the ECS service
+7. **Update ECS Service**: Triggers a new deployment of the ECS service using AWS CLI
+
+This workflow includes a `paths-ignore` configuration to prevent unnecessary deployments when certain files are changed:
+```yaml
+paths-ignore:
+  - .github/workflows/ecs.yml
+  - README.md
+  - LICENSE
+  - .gitignore
+  - Dockerfile
+  - src/**
+```
+
+### Alternative Workflow (ecs_b.yml)
+
+An alternative workflow in `.github/workflows/ecs_b.yml` achieves the same result but uses AWS GitHub Actions for ECS deployment:
+
+1. **Checkout Code**: Retrieves the latest code from the repository
+2. **Set up AWS Credentials**: Configures AWS authentication using repository secrets
+3. **Log in to Amazon ECR**: Authenticates with the container registry
+4. **Build Docker Image**: Creates a container image from the Dockerfile
+5. **Tag Docker Image**: Labels the image with the appropriate ECR repository URI
+6. **Push to ECR**: Uploads the image to Amazon ECR
+7. **Render Task Definition**: Uses `aws-actions/amazon-ecs-render-task-definition` to update the task definition with the new image
+8. **Debug Task Definition**: Outputs the rendered task definition for troubleshooting
+9. **Deploy to ECS**: Uses `aws-actions/amazon-ecs-deploy-task-definition` to deploy the updated task definition and waits for service stability
+
+This alternative workflow provides more robust ECS deployment by:
+- Using official AWS GitHub Actions for ECS deployment
+- Updating the task definition with the new image
+- Waiting for service stability before completing
+- Providing debug output for troubleshooting
 
 ### Required GitHub Secrets
 
@@ -126,6 +159,7 @@ Configure these secrets in your GitHub repository settings:
 - `ECR_REPOSITORY_URI`: Full URI of your ECR repository
 - `ECS_CLUSTER`: Name of your ECS cluster
 - `ECS_SERVICE`: Name of your ECS service
+- `CONTAINER_NAME`: Name of the container in your task definition (required for ecs_b.yml workflow)
 
 ## Deployment Process
 
@@ -142,7 +176,8 @@ Configure these secrets in your GitHub repository settings:
 ```
 .
 ├── .github/workflows/    # GitHub Actions workflow definitions
-│   └── ecs.yml          # Main CI/CD workflow file
+│   ├── ecs.yml          # Primary CI/CD workflow file using AWS CLI
+│   └── ecs_b.yml        # Alternative workflow using AWS GitHub Actions
 ├── assets/              # Static assets directory
 │   └── img/             # Image assets for the website
 │       ├── background.jpg
