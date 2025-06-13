@@ -1,4 +1,4 @@
-FROM nginx:1.28.0-alpine-latest
+FROM nginx:1.28.0-alpine
 
 
 # Remove default nginx static assets
