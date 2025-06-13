@@ -157,7 +157,7 @@ A third workflow in `.github/workflows/ecs_c.yml` adds security scanning to the 
 1. **Checkout Code**: Retrieves the latest code from the repository
 2. **Set up AWS Credentials**: Configures AWS authentication using repository secrets
 3. **Log in to Amazon ECR**: Authenticates with the container registry
-4. **Build Docker Image**: Creates a container image from the Dockerfile
+4. **Build Docker Image**: Creates a container image from the Dockerfile with security patches
 5. **Security Scan**: Uses Trivy to scan the Docker image for vulnerabilities
 6. **Tag Docker Image**: Labels the image with the appropriate ECR repository URI
 7. **Push to ECR**: Uploads the image to Amazon ECR
@@ -167,8 +167,12 @@ A third workflow in `.github/workflows/ecs_c.yml` adds security scanning to the 
 
 This security-enhanced workflow adds an important layer of protection by:
 - Scanning the Docker image for HIGH and CRITICAL vulnerabilities before deployment
+- Using a specific version of nginx (1.28.0-alpine) with security patches applied
+- Updating vulnerable packages (like libxml2) during the Docker build process
 - Failing the deployment if security issues are found
 - Ensuring only secure images are deployed to production
+
+✅ **Status**: This workflow is now running successfully with all security checks passing.
 
 ### Required GitHub Secrets
 
@@ -203,7 +207,7 @@ Configure these secrets in your GitHub repository settings:
 │   └── img/             # Image assets for the website
 │       ├── background.jpg
 │       └── logo.png
-├── Dockerfile           # NGINX container configuration
+├── Dockerfile           # NGINX container configuration with security patches
 ├── index.html           # Main HTML file for the website
 ├── style.css            # CSS styling for the website
 ├── task-definition.json # AWS ECS task definition template
@@ -275,6 +279,7 @@ To access the website publicly, port 80 must be explicitly allowed in the defaul
 1. **GitHub Actions Workflow Failure**
    - Check that all required secrets are correctly configured
    - Verify IAM permissions are sufficient for all operations
+   - For security scan failures, update vulnerable packages in the Dockerfile (see our solution for libxml2)
 
 2. **Container Not Deploying**
    - Ensure ECS service is configured correctly
