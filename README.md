@@ -27,6 +27,13 @@
 
 This project demonstrates a complete CI/CD pipeline for deploying a static website to AWS Elastic Container Service (ECS) using GitHub Actions. The workflow automatically builds a Docker container with NGINX, pushes it to Amazon Elastic Container Registry (ECR), and deploys it to an ECS Fargate service. This implementation showcases modern DevOps practices for containerized web applications.
 
+The project includes three different workflow implementations:
+1. **Basic Workflow (ecs.yml)**: Uses AWS CLI commands for simple deployment
+2. **Enhanced Workflow (ecs_b.yml)**: Uses AWS GitHub Actions for more robust deployment
+3. **Security-Enhanced Workflow (ecs_c.yml)**: Adds Trivy security scanning to ensure only secure images are deployed
+
+Each workflow demonstrates different approaches to CI/CD with increasing levels of sophistication and security controls.
+
 ## Architecture
 
 ```
