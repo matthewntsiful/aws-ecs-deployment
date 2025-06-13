@@ -150,6 +150,26 @@ This alternative workflow provides more robust ECS deployment by:
 - Waiting for service stability before completing
 - Providing debug output for troubleshooting
 
+### Security-Enhanced Workflow (ecs_c.yml)
+
+A third workflow in `.github/workflows/ecs_c.yml` adds security scanning to the deployment process:
+
+1. **Checkout Code**: Retrieves the latest code from the repository
+2. **Set up AWS Credentials**: Configures AWS authentication using repository secrets
+3. **Log in to Amazon ECR**: Authenticates with the container registry
+4. **Build Docker Image**: Creates a container image from the Dockerfile
+5. **Security Scan**: Uses Trivy to scan the Docker image for vulnerabilities
+6. **Tag Docker Image**: Labels the image with the appropriate ECR repository URI
+7. **Push to ECR**: Uploads the image to Amazon ECR
+8. **Render Task Definition**: Updates the task definition with the new image
+9. **Debug Task Definition**: Outputs the rendered task definition for troubleshooting
+10. **Deploy to ECS**: Deploys the updated task definition and waits for service stability
+
+This security-enhanced workflow adds an important layer of protection by:
+- Scanning the Docker image for HIGH and CRITICAL vulnerabilities before deployment
+- Failing the deployment if security issues are found
+- Ensuring only secure images are deployed to production
+
 ### Required GitHub Secrets
 
 Configure these secrets in your GitHub repository settings:
@@ -177,7 +197,8 @@ Configure these secrets in your GitHub repository settings:
 .
 ├── .github/workflows/    # GitHub Actions workflow definitions
 │   ├── ecs.yml          # Primary CI/CD workflow file using AWS CLI
-│   └── ecs_b.yml        # Alternative workflow using AWS GitHub Actions
+│   ├── ecs_b.yml        # Alternative workflow using AWS GitHub Actions
+│   └── ecs_c.yml        # Security-enhanced workflow with Trivy scanning
 ├── assets/              # Static assets directory
 │   └── img/             # Image assets for the website
 │       ├── background.jpg
