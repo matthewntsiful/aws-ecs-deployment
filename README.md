@@ -11,10 +11,12 @@
 
 ## Table of Contents
 - [Overview](#overview)
+- [Features](#features)
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
 - [AWS Services Configuration](#aws-services-configuration)
-- [GitHub Actions Workflow](#github-actions-workflow)
+- [GitHub Actions Workflows](#github-actions-workflows)
 - [Deployment Process](#deployment-process)
 - [Repository Structure](#repository-structure)
 - [Local Development](#local-development)
@@ -33,6 +35,17 @@ The project includes three different workflow implementations:
 3. **Security-Enhanced Workflow (ecs_c.yml)**: Adds Trivy security scanning to ensure only secure images are deployed
 
 Each workflow demonstrates different approaches to CI/CD with increasing levels of sophistication and security controls.
+
+## Features
+
+- **Automated CI/CD Pipeline**: Seamless integration with GitHub Actions for automated testing and deployment
+- **Multiple Deployment Strategies**: Three distinct workflows for different use cases and security requirements
+- **Containerized Application**: Lightweight NGINX container serving static content
+- **Infrastructure as Code**: All AWS resources defined in reusable templates
+- **Security First**: Built-in vulnerability scanning with Trivy in the security-enhanced workflow
+- **Scalable Architecture**: Designed to handle traffic spikes with ECS Fargate
+- **Cost-Effective**: Pay only for the resources you use with serverless components
+- **Monitoring Ready**: Built-in support for CloudWatch logs and metrics
 
 ## Architecture
 
@@ -97,6 +110,14 @@ flowchart TD
 - Basic understanding of Docker, AWS, and CI/CD concepts
 - Docker installed locally for development and testing
 - AWS CLI configured for local testing (optional)
+
+## Quick Start
+
+1. **Fork this repository** to your GitHub account
+2. **Set up AWS resources** using the configuration in the AWS Services Configuration section
+3. **Configure GitHub Secrets** with your AWS credentials and ECR repository URI
+4. **Push to main branch** to trigger the deployment pipeline
+5. **Access your application** at the Application Load Balancer DNS name
 
 ## AWS Services Configuration
 
