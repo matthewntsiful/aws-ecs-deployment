@@ -37,6 +37,7 @@ Each workflow demonstrates different approaches to CI/CD with increasing levels 
 ## Architecture
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'Arial' }}}%%
 flowchart LR
     A[GitHub Repository] -->|Push Code| B[GitHub Actions]
     B -->|Build & Push| C[Amazon ECR]
@@ -48,11 +49,22 @@ flowchart LR
         D
     end
     
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#2088FF,stroke:#333,stroke-width:2px,color:white
-    style C fill:#FF9900,stroke:#333,stroke-width:2px
-    style D fill:#FF9900,stroke:#333,stroke-width:2px
-    style E fill:#4CAF50,stroke:#333,stroke-width:2px,color:white
+    %% Styling for nodes
+    classDef github fill:#f9f,stroke:#333,stroke-width:2px,font-weight:bold
+    classDef githubActions fill:#2088FF,stroke:#333,stroke-width:2px,color:white,font-weight:bold
+    classDef awsService fill:#FF9900,stroke:#333,stroke-width:2px,font-weight:bold
+    classDef internet fill:#4CAF50,stroke:#333,stroke-width:2px,color:white,font-weight:bold
+    
+    class A github
+    class B githubActions
+    class C,D awsService
+    class E internet
+    
+    %% Make the diagram wider
+    linkStyle default stroke:#666,stroke-width:2px
+    
+    %% Add some spacing
+    style AWS_Cloud padding:20px
 ```
 
 - **Frontend**: Simple static website built with HTML5 and CSS3
