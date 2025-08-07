@@ -52,18 +52,15 @@ flowchart TD
         D -->|Register Targets| E
     end
     
-    %% Workflow files with proper formatting
-    B -->|1. Security Scan| B1["`**ecs_c.yml**
-    (Security Scan + Deploy)"]
-    B -->|2. Standard Deploy| B2["`**ecs_b.yml**
-    (Standard Deploy)"]
-    B -->|3. Basic Deploy| B3["`**ecs.yml**
-    (Basic Deploy)"]
+    %% Workflow files
+    B -->|1. Security Scan| B1[ecs_c.yml]
+    B -->|2. Standard Deploy| B2[ecs_b.yml]
+    B -->|3. Basic Deploy| B3[ecs.yml]
     
-    %% Push image actions with consistent formatting
-    B1 -->|"**Push Image**"| C
-    B2 -->|"**Push Image**"| C
-    B3 -->|"**Push Image**"| C
+    %% Push image actions
+    B1 -->|Push| C
+    B2 -->|Push| C
+    B3 -->|Push| C
     
     E -->|Serves| F[Public Internet]
     
