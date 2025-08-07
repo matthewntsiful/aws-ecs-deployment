@@ -53,9 +53,9 @@ flowchart TD
     end
     
     %% Workflow files
-    B -->|1. Security Scan| B1[ecs_c.yml]
-    B -->|2. Standard Deploy| B2[ecs_b.yml]
-    B -->|3. Basic Deploy| B3[ecs.yml]
+    B -->|Security Scan| B1[ecs_c.yml]
+    B -->|Standard Deploy| B2[ecs_b.yml]
+    B -->|Basic Deploy| B3[ecs.yml]
     
     %% Push image actions
     B1 -->|Push| C
