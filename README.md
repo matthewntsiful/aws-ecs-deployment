@@ -37,34 +37,46 @@ Each workflow demonstrates different approaches to CI/CD with increasing levels 
 ## Architecture
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'Arial' }}}%%
-flowchart LR
-    A[GitHub Repository] -->|Push Code| B[GitHub Actions]
-    B -->|Build & Push| C[Amazon ECR]
-    C -->|Deploy| D[AWS ECS Fargate]
-    D -->|Serves| E((Public Internet))
-    
-    subgraph AWS Cloud
-        C
-        D
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px', 'fontFamily': 'Arial' }}}%%
+flowchart TD
+    subgraph GitHub[GitHub]
+        A[GitHub Repository] -->|Push to main| B[GitHub Actions]
+    end
+
+    subgraph AWS[AWS Cloud]
+        C[ECR Container Registry]
+        D[ECS Fargate Service]
+        E[Application Load Balancer]
+        
+        C -->|Store Image| D
+        D -->|Register Targets| E
     end
     
-    %% Styling for nodes
+    B -->|1. Build & Scan| B1[Workflow: ecs_c.yml]
+    B -->|2. Build & Deploy| B2[Workflow: ecs_b.yml]
+    B -->|3. Simple Deploy| B3[Workflow: ecs.yml]
+    
+    B1 -->|Push Image| C
+    B2 -->|Push Image| C
+    B3 -->|Push Image| C
+    
+    E -->|Serves| F[/Public Internet/]
+    
+    %% Styling
     classDef github fill:#f9f,stroke:#333,stroke-width:2px,font-weight:bold
-    classDef githubActions fill:#2088FF,stroke:#333,stroke-width:2px,color:white,font-weight:bold
-    classDef awsService fill:#FF9900,stroke:#333,stroke-width:2px,font-weight:bold
+    classDef workflow fill:#2088FF,stroke:#333,stroke-width:2px,color:white,font-weight:bold
+    classDef aws fill:#FF9900,stroke:#333,stroke-width:2px,font-weight:bold
     classDef internet fill:#4CAF50,stroke:#333,stroke-width:2px,color:white,font-weight:bold
     
     class A github
-    class B githubActions
-    class C,D awsService
-    class E internet
+    class B1,B2,B3 workflow
+    class C,D,E aws
+    class F internet
     
     %% Make the diagram wider
     linkStyle default stroke:#666,stroke-width:2px
-    
-    %% Add some spacing
-    style AWS_Cloud padding:20px
+    style AWS fill:#f9f9f9,stroke:#333,stroke-width:1px
+    style GitHub fill:#f9f9f9,stroke:#333,stroke-width:1px
 ```
 
 - **Frontend**: Simple static website built with HTML5 and CSS3
