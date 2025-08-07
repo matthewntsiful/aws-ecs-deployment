@@ -36,22 +36,23 @@ Each workflow demonstrates different approaches to CI/CD with increasing levels 
 
 ## Architecture
 
-```
-┌─────────────┐     ┌───────────────┐     ┌─────────────────┐     ┌──────────────┐
-│             │     │               │     │                 │     │              │
-│  GitHub     │────▶│  GitHub       │────▶│  Amazon ECR     │────▶│  AWS ECS     │
-│  Repository │     │  Actions      │     │  (Container     │     │  Fargate     │
-│             │     │  Workflow     │     │   Registry)     │     │              │
-└─────────────┘     └───────────────┘     └─────────────────┘     └──────────────┘
-                                                                         │
-                                                                         │
-                                                                         ▼
-                                                                  ┌──────────────┐
-                                                                  │              │
-                                                                  │  Public      │
-                                                                  │  Internet    │
-                                                                  │              │
-                                                                  └──────────────┘
+```mermaid
+flowchart LR
+    A[GitHub Repository] -->|Push Code| B[GitHub Actions]
+    B -->|Build & Push| C[Amazon ECR]
+    C -->|Deploy| D[AWS ECS Fargate]
+    D -->|Serves| E((Public Internet))
+    
+    subgraph AWS Cloud
+        C
+        D
+    end
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#2088FF,stroke:#333,stroke-width:2px,color:white
+    style C fill:#FF9900,stroke:#333,stroke-width:2px
+    style D fill:#FF9900,stroke:#333,stroke-width:2px
+    style E fill:#4CAF50,stroke:#333,stroke-width:2px,color:white
 ```
 
 - **Frontend**: Simple static website built with HTML5 and CSS3
