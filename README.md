@@ -52,15 +52,15 @@ flowchart TD
         D -->|Register Targets| E
     end
     
-    B -->|1. Build & Scan| B1[Workflow: ecs_c.yml]
-    B -->|2. Build & Deploy| B2[Workflow: ecs_b.yml]
-    B -->|3. Simple Deploy| B3[Workflow: ecs.yml]
+    B -->|1. Security Scan| B1[ecs_c.yml]
+    B -->|2. Standard Deploy| B2[ecs_b.yml]
+    B -->|3. Basic Deploy| B3[ecs.yml]
     
     B1 -->|Push Image| C
     B2 -->|Push Image| C
     B3 -->|Push Image| C
     
-    E -->|Serves| F[/Public Internet/]
+    E -->|Serves| F[Public Internet]
     
     %% Styling
     classDef github fill:#f9f,stroke:#333,stroke-width:2px,font-weight:bold
@@ -73,7 +73,7 @@ flowchart TD
     class C,D,E aws
     class F internet
     
-    %% Make the diagram wider
+    %% Styling
     linkStyle default stroke:#666,stroke-width:2px
     style AWS fill:#f9f9f9,stroke:#333,stroke-width:1px
     style GitHub fill:#f9f9f9,stroke:#333,stroke-width:1px
